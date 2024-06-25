@@ -12,6 +12,7 @@
     "@deepgram/sdk": "^3.3.5",
     "@headlessui/react": "^2.1.0",
     "@tailwindcss/forms": "^0.5.7",
+    "@types/uuid": "^10.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.396.0",
@@ -21,7 +22,8 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
