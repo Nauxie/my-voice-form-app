@@ -131,8 +131,13 @@ export default function Home() {
 
             <div className="mt-8 text-center text-sm text-gray-500">
               <p>
-                Need help?{" "}
-                <button className="text-blue-600"> Contact support</button>
+                View on{" "}
+                <a
+                  href="https://github.com/Nauxie/my-voice-form-app"
+                  className="text-blue-600 hover:underline"
+                >
+                  GitHub
+                </a>
               </p>
             </div>
           </div>
