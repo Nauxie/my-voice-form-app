@@ -11,14 +11,20 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
 
+  const handleRecordingStop = async () => {
+    setIsLoading(true);
+    setError(null);
+  };
+
   const handleTranscriptionComplete = async (text: string | null) => {
+    setIsLoading(true);
     if (text === null) {
       setError("Transcription failed. Please try recording again.");
       return;
     }
 
     setTranscription(text);
-    setIsLoading(true);
+
     setError(null);
 
     try {
@@ -72,6 +78,8 @@ export default function Home() {
 
             <AudioRecorder
               onTranscriptionComplete={handleTranscriptionComplete}
+              onRecordingStop={handleRecordingStop}
+              isLoading={isLoading}
             />
 
             {isLoading && (

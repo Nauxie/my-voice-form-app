@@ -2,11 +2,15 @@ import React from "react";
 import useAudioRecorder from "../hooks/useAudioRecorder";
 
 interface AudioRecorderProps {
-  onTranscriptionComplete: (text: string) => void;
+  onTranscriptionComplete: (text: string | null) => void;
+  onRecordingStop: () => void;
+  isLoading: boolean;
 }
 
 const AudioRecorder: React.FC<AudioRecorderProps> = ({
   onTranscriptionComplete,
+  onRecordingStop,
+  isLoading,
 }) => {
   const {
     recorderState,
@@ -17,12 +21,9 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
   } = useAudioRecorder();
 
   const handleStopRecording = async () => {
-    try {
-      const result = await stopRecording();
-      onTranscriptionComplete(result?.transcription || "");
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    onRecordingStop();
+    const result = await stopRecording();
+    onTranscriptionComplete(result?.transcription || null);
   };
 
   return (
@@ -31,6 +32,7 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
         {!recorderState.isRecording ? (
           <button
             onClick={startRecording}
+            disabled={isLoading}
             className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
           >
             Start Recording
@@ -38,6 +40,7 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
         ) : (
           <button
             onClick={handleStopRecording}
+            disabled={isLoading}
             className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
           >
             Stop Recording
@@ -47,6 +50,7 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
         {recorderState.isRecording && !recorderState.isPaused ? (
           <button
             onClick={pauseRecording}
+            disabled={isLoading}
             className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
           >
             Pause
@@ -54,6 +58,7 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
         ) : recorderState.isPaused ? (
           <button
             onClick={resumeRecording}
+            disabled={isLoading}
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
             Resume
